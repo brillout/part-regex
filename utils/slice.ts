@@ -1,4 +1,4 @@
-import assert = require('assert')
+import { assert } from '../utils/assert'
 
 export { slice }
 

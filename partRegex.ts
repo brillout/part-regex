@@ -1,7 +1,8 @@
-import assert = require('assert')
-import { slice } from './slice'
+import { assert } from './utils/assert'
+import { slice } from './utils/slice'
 
 export { partRegex }
+export default partRegex
 
 function partRegex(parts: TemplateStringsArray, ...variables: RegExp[]): RegExp {
   assert(parts.length === variables.length + 1)
