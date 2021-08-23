@@ -1,0 +1,15 @@
+{
+  "name": "part-regex",
+  "version": "0.1.0",
+  "description": "Create a RegExp by defining some parts with strings and other parts with RegExp",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist/ && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "typescript": "^4.3.5"
+  }
+}
