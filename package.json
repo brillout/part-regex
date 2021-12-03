@@ -1,10 +1,11 @@
 {
   "name": "part-regex",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create a RegExp by defining some parts with strings and other parts with RegExp",
   "main": "dist/partRegex.js",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
+    "test": "npm run build && node ./test.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
