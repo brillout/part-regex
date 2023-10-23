@@ -1,6 +1,6 @@
 {
   "name": "@brillout/part-regex",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Create a RegExp by defining some parts with strings and other parts with RegExp",
   "main": "dist/partRegex.js",
   "scripts": {
