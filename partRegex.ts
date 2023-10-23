@@ -1,5 +1,4 @@
-import { assert } from './utils/assert'
-import { slice } from './utils/slice'
+import { assert, assertUsage, slice } from './utils'
 
 export { partRegex }
 export default partRegex
@@ -11,7 +10,13 @@ function partRegex(parts: TemplateStringsArray, ...variables: (RegExp | unknown)
     const variable = variables[i]
     str += escapeString(parts[i])
     if (isRegex(variable)) {
-      str += slice(variable.toString(), 1, -1)
+      const regex = variable.toString()
+      assert(regex.startsWith('/'))
+      assertUsage(
+        regex.startsWith('/'),
+        `The part regex ${regex} contains a regex flag which is forbidden (as it would affect all other part regexp)`
+      )
+      str += slice(regex, 1, -1)
     } else {
       str += escapeString(String(variable))
     }
