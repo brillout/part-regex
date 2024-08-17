@@ -13,7 +13,7 @@ function partRegex(parts: TemplateStringsArray, ...variables: (RegExp | unknown)
       const regex = variable.toString()
       assert(regex.startsWith('/'))
       assertUsage(
-        regex.startsWith('/'),
+        regex.endsWith('/'),
         `The part regex ${regex} contains a regex flag which is forbidden (as it would affect all other part regexp)`
       )
       str += slice(regex, 1, -1)
