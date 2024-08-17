@@ -1,28 +1,24 @@
-import { assert, assertUsage, slice } from './utils'
+import { assert } from './utils'
 
 export { partRegex }
 export default partRegex
 
 function partRegex(parts: TemplateStringsArray, ...variables: (RegExp | unknown)[]): RegExp {
   assert(parts.length === variables.length + 1)
-  let str = ''
+  let regexStr = ''
   for (let i = 0; i < variables.length; i++) {
+    regexStr += escapeString(parts[i]) // static string
     const variable = variables[i]
-    str += escapeString(parts[i])
     if (isRegex(variable)) {
-      const regex = variable.toString()
-      assert(regex.startsWith('/'))
-      assertUsage(
-        regex.endsWith('/'),
-        `The part regex ${regex} contains a regex flag which is forbidden (as it would affect all other part regexp)`,
-      )
-      str += slice(regex, 1, -1)
+      const parsed = parseRegex(variable)
+      regexStr += parsed.regexStr
     } else {
-      str += escapeString(String(variable))
+      regexStr += escapeString(String(variable)) // static string
     }
   }
-  str += escapeString(parts[parts.length - 1])
-  return new RegExp(str)
+  regexStr += escapeString(parts[parts.length - 1]) // static string
+  const regex = new RegExp(regexStr)
+  return regex
 }
 
 function escapeString(str: string) {
@@ -32,4 +28,14 @@ function escapeString(str: string) {
 // https://github.com/sindresorhus/is-regexp/blob/e38696a04645a94a0c1db00ecf8a28822a33b5f6/index.js
 function isRegex(value: unknown): value is RegExp {
   return toString.call(value) === '[object RegExp]'
+}
+
+function parseRegex(regex: RegExp) {
+  let regexStr = regex.toString()
+  assert(regexStr.startsWith('/'))
+  const parts = regexStr.split('/')
+  parts.pop()
+  parts.shift()
+  regexStr = parts.join('/')
+  return { regexStr }
 }
