@@ -6,18 +6,20 @@ export default partRegex
 function partRegex(parts: TemplateStringsArray, ...variables: (RegExp | unknown)[]): RegExp {
   assert(parts.length === variables.length + 1)
   let regexStr = ''
+  let flags = ''
   for (let i = 0; i < variables.length; i++) {
     regexStr += escapeString(parts[i]) // static string
     const variable = variables[i]
     if (isRegex(variable)) {
       const parsed = parseRegex(variable)
       regexStr += parsed.regexStr
+      flags += parsed.flags
     } else {
       regexStr += escapeString(String(variable)) // static string
     }
   }
   regexStr += escapeString(parts[parts.length - 1]) // static string
-  const regex = new RegExp(regexStr)
+  const regex = new RegExp(regexStr, flags)
   return regex
 }
 
@@ -34,8 +36,8 @@ function parseRegex(regex: RegExp) {
   let regexStr = regex.toString()
   assert(regexStr.startsWith('/'))
   const parts = regexStr.split('/')
-  parts.pop()
+  const flags = parts.pop()
   parts.shift()
   regexStr = parts.join('/')
-  return { regexStr }
+  return { regexStr, flags }
 }

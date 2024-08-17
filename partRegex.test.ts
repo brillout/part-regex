@@ -15,4 +15,7 @@ describe('error handling', async () => {
     const productEditPageUrl = partRegex`/product/${partRegex`${/[0-9]+/}/edit`}`
     expect(productEditPageUrl.test('/product/42/edit')).toBe(true)
   })
+  it('flags', async () => {
+    expect(partRegex`line1${/.*/s}line4`.test(['line1', 'line2', 'line3', 'line4'].join('\n'))).toBe(true)
+  })
 })
