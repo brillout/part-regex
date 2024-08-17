@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npm run build && node ./test.mjs",
     "build": "rm -rf dist/ && tsc",
+    "dev": "tsc --watch",
     "prepublishOnly": "npm run build",
     "release": "npm version patch && npm publish && git push && git push --tags"
   },
