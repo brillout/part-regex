@@ -14,7 +14,7 @@ function partRegex(parts: TemplateStringsArray, ...variables: (RegExp | unknown)
       assert(regex.startsWith('/'))
       assertUsage(
         regex.endsWith('/'),
-        `The part regex ${regex} contains a regex flag which is forbidden (as it would affect all other part regexp)`
+        `The part regex ${regex} contains a regex flag which is forbidden (as it would affect all other part regexp)`,
       )
       str += slice(regex, 1, -1)
     } else {

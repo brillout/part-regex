@@ -4,16 +4,28 @@
   "description": "Create a RegExp by defining some parts with strings and other parts with RegExp",
   "main": "dist/partRegex.js",
   "scripts": {
-    "test": "npm run build && node ./test.mjs",
-    "build": "rm -rf dist/ && tsc",
+    "// === Test ===": "",
+    "test": "vitest",
+    "// === Dev ===": "",
     "dev": "tsc --watch",
-    "prepublishOnly": "npm run build",
-    "release": "npm version patch && npm publish && git push && git push --tags"
+    "// === Build ===": "",
+    "build": "rm -rf dist/ && tsc",
+    "========= Formatting": "",
+    "format": "pnpm run format:biome",
+    "format:biome": "biome format --write .",
+    "========= Reset": "",
+    "reset": "git clean -Xdf && pnpm install && pnpm run build",
+    "========= Release": "",
+    "release": "release-me patch",
+    "release:commit": "release-me commit"
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^15.12.2",
-    "typescript": "^4.3.5"
+    "@biomejs/biome": "^1.8.3",
+    "@brillout/release-me": "^0.4.0",
+    "@types/node": "^22.4.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
   },
   "repository": "github:brillout/part-regex",
   "publishConfig": {
